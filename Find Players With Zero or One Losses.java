@@ -78,11 +78,13 @@ class Solution {
                 l.add(con3.get(i));
             }
          }
-          for (int i = 0; i < len1; i++) {
+           int len3 = l.size();
+          for (int i = 0; i < len3; i++) {
             if (!x.contains(l.get(i))) {
                 x.add(l.get(i));
             }
         } 
+        x.sort(null);
         corr.add(h);
         corr.add(x);
         return corr;
