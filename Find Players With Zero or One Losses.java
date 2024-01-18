@@ -3,35 +3,41 @@ import java.util.List;
 
 class Solution {
   public List<List<Integer>> findWinners(int[][] matches) {
-    Set<Integer> winners = new HashSet<>();
-    Map<Integer, Integer> losers = new HashMap<>();
-
-    for (int[] match : matches) {
-        winners.add(match[0]);
-        losers.put(match[1], losers.getOrDefault(match[1], 0) + 1);
-    }
-
-    List<Integer> noLosses = new ArrayList<>();
-    List<Integer> oneLoss = new ArrayList<>();
-
-    for (int winner : winners) {
-        if (!losers.containsKey(winner)) {
-            noLosses.add(winner);
-        } else if (losers.get(winner) == 1) {
-            oneLoss.add(winner);
-        }
-    }
-
-    for (Map.Entry<Integer, Integer> entry : losers.entrySet()) {
-        if (entry.getValue() == 1 && !winners.contains(entry.getKey())) {
-            oneLoss.add(entry.getKey());
-        }
-    }
-
-    Collections.sort(noLosses);
-    Collections.sort(oneLoss);
-
-    return Arrays.asList(noLosses, oneLoss);
+   int losses[] = new int[100001];
+   for(int i=0;i<matches.length;i++)
+   {
+       int win = matches[i][0];
+       int loss = matches[i][1];
+       if(losses[win]==0)
+       {
+           losses[win]=-1;
+       }
+       if(losses[loss]==-1)
+       {
+           losses[loss]=1;
+       }
+      else
+      {
+          losses[loss]++;
+      }
+   }
+   List<Integer> zeroLoss = new ArrayList<>();
+   List<Integer> oneLoss = new ArrayList<>();
+   List<List<Integer>> result = new ArrayList<>();
+    for(int i=0;i<losses.length;i++)
+   {
+       if(losses[i]==-1)
+       {
+           zeroLoss.add(i);
+       }
+       else if(losses[i]==1)
+       {
+           oneLoss.add(i);
+       }
+   }
+   result.add(zeroLoss);
+   result.add(oneLoss);
+   return result;
 }
 }
 
